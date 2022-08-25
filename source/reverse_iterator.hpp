@@ -22,16 +22,24 @@
 			typedef typename ft::iterator_traits<Iterator>::pointer			pointer;
 
 			//CONSTRUCTORS
-			reverse_iterator();
-			reverse_iterator(Iterator rhs);
+			reverse_iterator(void) : _now(iterator_type())
+			{}
+			reverse_iterator(Iterator rhs) : _now(rhs)
+			{}
 			template <typename Iter>
-			reverse_iterator (const reverse_iterator<Iter>& rev_it);
+			reverse_iterator (const reverse_iterator<Iter>& rev_it) : _now(rev_it.base())
+			{}
 
 			//DESTRUCTOR
-			~reverse_iterator( void );
+			~reverse_iterator( void )
+			{}
 
 			//ASSIGNEMENT OPERATOR
-			const reverse_iterator& operator=(const reverse_iterator& rev_it);
+			const reverse_iterator& operator=(const reverse_iterator& rev_it)
+			{
+				this->_now = rev_it.base();
+				return (*this);
+			}
 
 			//BASE
 			Iterator base() const
