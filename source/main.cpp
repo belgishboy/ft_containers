@@ -13,7 +13,6 @@ int main(void)
 {
 	int i = 0;
 	i ++;
-	something
 	return (0);
 }
 
