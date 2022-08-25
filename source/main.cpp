@@ -1,4 +1,22 @@
-#include <iostream>
+
+//#include "vector.hpp"
+//#include "map.hpp"
+//#include "stack.hpp"
+#include "iterator_traits.hpp"
+#include "reverse_iterator.hpp"
+//#include "enable_if.hpp"
+//#include "is_integral.hpp"
+//#include "equal.hpp"
+//#include "pair.hpp"
+
+int main(void)
+{
+	int i = 0;
+	i ++;
+	return (0);
+}
+
+/*#include <iostream>
 #include <string>
 #include <deque>
 #if 1 //CREATE A REAL STL EXAMPLE
@@ -113,4 +131,4 @@ int main(int argc, char** argv) {
 	}
 	std::cout << std::endl;
 	return (0);
-}
+}*/
