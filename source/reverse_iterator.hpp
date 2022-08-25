@@ -23,7 +23,7 @@
 
 			//CONSTRUCTORS
 			reverse_iterator();
-			reverse_iterator(Iterator x);
+			reverse_iterator(Iterator rhs);
 			template <typename Iter>
 			reverse_iterator (const reverse_iterator<Iter>& rev_it);
 
@@ -98,31 +98,38 @@
 			}
 			
 	};
-/*
-template <class Iterator1, class Iterator2>
-constexpr bool                          // constexpr in C++17
-operator==(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y);
-
-template <class Iterator1, class Iterator2>
-constexpr bool                          // constexpr in C++17
-operator<(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y);
-
-template <class Iterator1, class Iterator2>
-constexpr bool                          // constexpr in C++17
-operator!=(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y);
-
-template <class Iterator1, class Iterator2>
-constexpr bool                          // constexpr in C++17
-operator>(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y);
-
-template <class Iterator1, class Iterator2>
-constexpr bool                          // constexpr in C++17
-operator>=(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y);
-
-template <class Iterator1, class Iterator2>
-constexpr bool                          // constexpr in C++17
-operator<=(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y);
-*/
+	//Compairison
+	template <typename iter>
+	bool operator==(const typename ft::reverse_iterator<iter>& lhs, const typename ft::reverse_iterator<iter>& rhs)
+	{
+		return (lhs.base() == rhs.base())
+	}
+	template <typename iter>
+	bool operator<(const typename ft::reverse_iterator<iter>& lhs, const typename ft::reverse_iterator<iter>& rhs)
+	{
+		return (lhs.base() < rhs.base())
+	}
+	template <typename iter>
+	bool operator!=(const typename ft::reverse_iterator<iter>& lhs, const typename ft::reverse_iterator<iter>& rhs)
+	{
+		return !(lhs == rhs)
+	}
+	template <typename iter>
+	bool operator>(const typename ft::reverse_iterator<iter>& lhs, const typename ft::reverse_iterator<iter>& rhs)
+	{
+		return (rhs < lhs)
+	}
+	template <typename iter>
+	bool operator>=(const typename ft::reverse_iterator<iter>& lhs, const typename ft::reverse_iterator<iter>& rhs)
+	{
+		return !(lhs > rhs)
+	}
+	template <typename iter>
+	bool operator<=(const typename ft::reverse_iterator<iter>& lhs, const typename ft::reverse_iterator<iter>& rhs)
+	{
+		return !(lhs < rhs)
+	}
+	
 	//EXTERNAL OPPERATORS
 	template <typename Iterator>
 	ft::reverse_iterator<Iterator>operator-(const typename ft::reverse_iterator<Iterator>::difference_type& lhs, const ft::reverse_iterator<Iterator>& rhs);
