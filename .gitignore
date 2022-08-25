@@ -1,0 +1,7 @@
+*.o
+*.a
+containers
+*.dSYM
+build/
+.vscode/
+.DS_Store
