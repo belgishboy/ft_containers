@@ -147,7 +147,7 @@
 	template <typename Iterator>
 	ft::reverse_iterator<Iterator> operator+(const typename ft::reverse_iterator<Iterator>::difference_type& lhs, const ft::reverse_iterator<Iterator>& rhs)
 	{
-		return (rhs.base() + lhs);
+		return (rhs.base() - lhs);
 	}
  }
 #endif
