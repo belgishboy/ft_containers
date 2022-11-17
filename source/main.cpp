@@ -1,18 +1,16 @@
 
-//#include "vector.hpp"
+#include "vector.hpp"
 //#include "map.hpp"
 //#include "stack.hpp"
 #include "iterator_traits.hpp"
 #include "reverse_iterator.hpp"
-//#include "enable_if.hpp"
-//#include "is_integral.hpp"
-//#include "equal.hpp"
-//#include "pair.hpp"
-
+#include "rand_iterator.hpp"
+#include "util.hpp"
 int main(void)
 {
 	int i = 0;
 	i ++;
+	
 	return (0);
 }
 

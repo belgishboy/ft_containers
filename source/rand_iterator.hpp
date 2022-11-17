@@ -15,6 +15,7 @@
 			Iter *_now;
 		public:
 			typedef Iter																			iterator_type;
+			typedef typename std::iterator<std::random_access_iterator_tag, Iter>::value_type		value_type;
 			typedef typename std::iterator<std::random_access_iterator_tag, Iter>::difference_type	difference_type;
 			typedef typename std::iterator<std::random_access_iterator_tag, Iter>::pointer			pointer;
 			typedef typename std::iterator<std::random_access_iterator_tag, Iter>::reference			reference;
@@ -101,6 +102,10 @@
 			{
 				_now -= n;
 				return (*this);
+			}
+			difference_type operator-(const ft::rand_iterator<Iter>& rhs)
+			{
+				return (this->_now - rhs._now);
 			}
 
 	};
