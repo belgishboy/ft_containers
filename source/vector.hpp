@@ -7,6 +7,7 @@
 
 #include "reverse_iterator.hpp"
 #include "rand_iterator.hpp"
+#include "util.hpp"
 
 namespace ft
 {
@@ -49,11 +50,19 @@ namespace ft
 				this->_alloc.construct(&this->_v[this->_used_size], val);
 			this->_alloc_size = n;
 		};
-		// template <class InputIterator>
-		// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) //range (3)
-		// {
-
-		// };
+		template <class InputIterator>
+		vector(	InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type& alloc = allocator_type() ) //range (3)
+		{
+			this->_alloc = alloc;
+			this->_v = NULL;
+			this->_used_size = 0;
+			this->_alloc_size = 0;
+			while(first != last)
+			{
+				this->push_back(*first);
+				first++;
+			}
+		};
 		vector (const vector& x) //copy (4)
 		{
 			this->_alloc = x._alloc;
@@ -61,14 +70,14 @@ namespace ft
 			this->_used_size = 0;
 			this->_alloc_size = 0;
 			(*this) = x;
-		}
+		};
 
 		//DESTRUCTOR
 		~vector(void)
 		{
 			this->clear();
 			this->_alloc.deallocate(this->_v, this->_alloc_size);
-		}
+		};
 
 		//OPERATOR
 		vector& operator=(const vector& rhs)
@@ -90,11 +99,11 @@ namespace ft
 		iterator begin()
 		{
 			return (iterator(this->_v));
-		}
+		};
 		const_iterator begin() const
 		{
 			return (const_iterator(this->_v));
-		}
+		};
 		iterator end()
 		{
 			return(iterator(this->begin() + this->_used_size));
@@ -212,8 +221,16 @@ namespace ft
 		};
 
 		//MODIFIERS
-		// template <class InputIterator>
-		// void assign (InputIterator first, InputIterator last);
+		template <class InputIterator>
+		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
+		{
+				this->clear();
+				while (first != last) 
+				{
+					this->push_back(*first);
+					first++;
+				}
+		};
 		void assign (size_type n, const value_type& val)
 		{
 			allocator_type tmp = this->_alloc;
@@ -293,11 +310,6 @@ namespace ft
 
 		//ALLOCATOR
 		allocator_type get_allocator() const;
-
-		// private:
-		// 	pointer start;
-		// 	pointer usedEnd;
-		// 	pointer allocEnd;
 
 	};
 
