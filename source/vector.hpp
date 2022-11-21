@@ -51,7 +51,7 @@ namespace ft
 			this->_alloc_size = n;
 		};
 		template <class InputIterator>
-		vector(	InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type& alloc = allocator_type() ) //range (3)
+		vector(	InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type() ) //range (3)
 		{
 			this->_alloc = alloc;
 			this->_v = NULL;
@@ -222,7 +222,7 @@ namespace ft
 
 		//MODIFIERS
 		template <class InputIterator>
-		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
+		void assign (InputIterator first, InputIterator last)
 		{
 				this->clear();
 				while (first != last) 
@@ -290,15 +290,62 @@ namespace ft
 				}
 			}
 		};
-		// template <class InputIterator>
-		// void insert(iterator position, InputIterator first, InputIterator last);
+		template <class InputIterator>
+		void insert(iterator position, InputIterator first, InputIterator last)
+		{
+			this->clear();
+			while (first != last) 
+			{
+				position = this->insert(position, *first);
+				first++;
+				position ++;
+			}
+		};
 
-		// iterator erase(iterator position)
-		// {
+		iterator erase(iterator position)
+		{
+			return this->erase(position, position+1);
+		}
 
-		// };
-		// iterator erase(iterator first, iterator last);
-		// void swap(vector&);
+		iterator erase(iterator first, iterator last)
+		{
+			vector<value_type> tmp = *this;
+			size_type start_pos = 0;
+			size_type end_pos = 0;
+			iterator it = this->begin();
+			while (it != first && start_pos < this->_used_size) {
+				it++;
+				start_pos++;
+			}
+			end_pos = start_pos;
+			while (it != last && end_pos <= this->_used_size) {
+				it++;
+				end_pos++;
+			}
+			if (start_pos == this->_used_size || end_pos > this->_used_size) {
+				throw std::runtime_error("Not a valid pointer to this vector");
+			}
+			for (size_type i = start_pos; i < end_pos; i++) {
+				this->_alloc.destroy(this->_v + i);
+			}
+			this->_used_size = start_pos;
+			for (size_type i = end_pos; i < tmp._used_size; i++) {
+				this->push_back(tmp[i]);
+			}
+			return iterator(this->_v + start_pos);
+		}
+		void swap(vector& vec)
+		{
+			value_type	*tmp_v = vec._v;
+			size_type	tmp_used_size = vec._used_size;
+			size_type	tmp_alloc_size = vec._alloc_size;
+			vec._v = this->_v;
+			vec._used_size = this->_used_size;
+			vec._alloc_size = this->_alloc_size;
+			this->_v = tmp_v;
+			this->_used_size = tmp_used_size;
+			this->_alloc_size = tmp_alloc_size;
+		};
 		void clear()
 		{
 			if (this->empty())
@@ -309,23 +356,26 @@ namespace ft
 		};
 
 		//ALLOCATOR
-		allocator_type get_allocator() const;
+		allocator_type get_allocator() const
+		{
+			return (this->_alloc);
+		};
 
 	};
 
 	//REGIONAL OPERATORS
 	template <class T, class Allocator>
-	bool operator==(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs);
+	ft::vector<T>operator==(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
 	template <class T, class Allocator>
-	bool operator< (const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs);
+	ft::vector<T>operator< (const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
 	template <class T, class Allocator>
-	bool operator!=(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs);
+	ft::vector<T>operator!=(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
 	template <class T, class Allocator>
-	bool operator> (const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs);
+	ft::vector<T>operator> (const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
 	template <class T, class Allocator>
-	bool operator>=(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs);
+	ft::vector<T>operator>=(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
 	template <class T, class Allocator>
-	bool operator<=(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs);
+	ft::vector<T>operator<=(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
 }
 
 #endif 
