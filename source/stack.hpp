@@ -1,5 +1,5 @@
-#ifndef FT_MAP_HPP
-#define FT_MAP_HPP
+#ifndef FT_STACK_HPP
+#define FT_STACK_HPP
 
 #include <memory>
 #include <cstddef>
@@ -29,7 +29,7 @@ namespace ft
 		// 	return *this;
 		// }
 
-		explicit stack(const container_type& _c):c(_c)
+		explicit stack(const container_type& _c = container_type()):c(_c)
 		{}
 
 		bool empty() const

@@ -147,37 +147,31 @@ namespace ft
 			return *this;
 		};
 
-		template <class _T1, class _T2>
 		bool operator==( const pair<_T1,_T2>& rhs)
 		{
 			return this->first == rhs.first && this->second == rhs.second;
 		}
 
-		template <class _T1, class _T2>
 		bool operator!=( const pair<_T1,_T2>& rhs)
 		{
 			return !(this == rhs);
 		}
 
-		template <class _T1, class _T2>
 		bool operator< ( const pair<_T1,_T2>& rhs)
 		{
 			return this->first < rhs.first || (!(rhs.first < this->first) && this->second < rhs.second);
 		}
 
-		template <class _T1, class _T2>
 		bool operator> ( const pair<_T1,_T2>& rhs)
 		{
 			return rhs < this;
 		}
 
-		template <class _T1, class _T2>
 		bool operator>=( const pair<_T1,_T2>& rhs)
 		{
 			return !(this < rhs);
 		}
 
-		template <class _T1, class _T2>
 		bool operator<=( const pair<_T1,_T2>& rhs)
 		{
 			return !(rhs < this);

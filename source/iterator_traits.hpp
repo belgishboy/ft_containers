@@ -1,11 +1,11 @@
 #ifndef FT_ITERATOR_TRAITS_HPP
- #define FT_ITERATOR_TRAITS_HPP
+#define FT_ITERATOR_TRAITS_HPP
 
- #include <iterator>
- #include <cstddef>
+#include <iterator>
+#include <cstddef>
  
- namespace ft
- {
+namespace ft
+{
 	template<class Iterator>
 	class iterator_traits
 	{
@@ -38,6 +38,6 @@
 			typedef const T&							reference;
 			typedef std::random_access_iterator_tag		iterator_category;
 	};
- }
+}
 
 #endif

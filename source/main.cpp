@@ -1,132 +1,181 @@
-
-#include "vector.hpp"
-//#include "map.hpp"
-//#include "stack.hpp"
-#include "iterator_traits.hpp"
-#include "reverse_iterator.hpp"
-#include "rand_iterator.hpp"
-#include "util.hpp"
-int main(void)
-{
-	int i = 0;
-	i ++;
-	
-	return (0);
-}
-
-/*#include <iostream>
+#include <iostream>
 #include <string>
 #include <deque>
-#if 1 //CREATE A REAL STL EXAMPLE
+#include <iomanip>
+#include <vector>
+#include <typeinfo>
+#include <list>
+
+#define NODES 500000
+
+#if LIB //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
+	#include <iterator>
 	namespace ft = std;
+	#define TESTCASE 1
 #else
-	#include <map.hpp>
-	#include <stack.hpp>
-	#include <vector.hpp>
+	#include "map.hpp"
+	#include "stack.hpp"
+	#include "vector.hpp"
+	#include "util.hpp"
+	#include <iostream>
+	#include <sstream>
+	#define TESTCASE 0
 #endif
 
 #include <stdlib.h>
+// #include "AAnimal.hpp"
+// #include "Cat.hpp"
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
-struct Buffer
+
+#include <sys/time.h>
+typedef struct timeval	t_timeval;
+
+int	gettime(t_timeval start)
 {
-	int idx;
-	char buff[BUFFER_SIZE];
-};
+	t_timeval	tv;
+	int			tdiff;
 
+	gettimeofday(&tv, NULL);
+	tdiff = (tv.tv_sec - start.tv_sec) * 1000;
+	tdiff += (tv.tv_usec - start.tv_usec) / 1000;
+	return (tdiff);
+}
 
-#define COUNT (MAX_RAM / (int)sizeof(Buffer))
-
-template<typename T>
-class MutantStack : public ft::stack<T>
+void	outputTitle(std::string title)
 {
-public:
-	MutantStack() {}
-	MutantStack(const MutantStack<T>& src) { *this = src; }
-	MutantStack<T>& operator=(const MutantStack<T>& rhs) 
+	std::string	toPrint;
+	int	size = 60;
+	int	n;
+
+	toPrint = " " + title + " ";
+	n = toPrint.size();
+	if (n > size)
 	{
-		this->c = rhs.c;
-		return *this;
+		toPrint = toPrint.substr(0, size - 2);
+		toPrint[size - 4] = '.';
+		toPrint[size - 3] = ' ';
+		n = toPrint.size();
 	}
-	~MutantStack() {}
+	std::cout << std::endl << std::setfill('=') << std::setw(size) << "" << std::endl;
+	std::cout << std::setw(size / 2) << toPrint.substr(0, n / 2);
+	std::cout << toPrint.substr(n / 2, n);
+	std::cout << std::setfill('=') << std::setw(size - size / 2 - n + n / 2) << "" << std::endl;
+	std::cout << std::setfill('=') << std::setw(size) << "" << std::endl;
+	std::cout << std::endl;
+}
 
-	typedef typename ft::stack<T>::container_type::iterator iterator;
+void print(int id, const ft::vector<int>& container)
+{
+	std::cout << id << ". ";	
+	for (unsigned i=0; i<container.size(); ++i)
+		std::cout << ' ' << container[i];
+	std::cout << '\n';
+}
 
-	iterator begin() { return this->c.begin(); }
-	iterator end() { return this->c.end(); }
-};
+void map_insert_test(ft::map<int, int> *mp, int min, int max)
+{
+	int n = min+(max-min)/2;
+	mp->insert(ft::make_pair(n, n));
+	if (max - min > 1)
+	{
+		map_insert_test(mp, min, n);
+		map_insert_test(mp, n, max);
+	}
+}
 
 int main(int argc, char** argv) {
 	if (argc != 2)
 	{
 		std::cerr << "Usage: ./test seed" << std::endl;
 		std::cerr << "Provide a seed please" << std::endl;
-		std::cerr << "Count value:" << COUNT << std::endl;
 		return 1;
 	}
 	const int seed = atoi(argv[1]);
 	srand(seed);
 
-	ft::vector<std::string> vector_str;
-	ft::vector<int> vector_int;
-	ft::stack<int> stack_int;
-	ft::vector<Buffer> vector_buffer;
-	ft::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
-	ft::map<int, int> map_int;
+	// **************************************************
 
-	for (int i = 0; i < COUNT; i++)
-	{
-		vector_buffer.push_back(Buffer());
-	}
-
-	for (int i = 0; i < COUNT; i++)
-	{
-		const int idx = rand() % COUNT;
-		vector_buffer[idx].idx = 5;
-	}
-	ft::vector<Buffer>().swap(vector_buffer);
-
-	try
-	{
-		for (int i = 0; i < COUNT; i++)
-		{
-			const int idx = rand() % COUNT;
-			vector_buffer.at(idx);
-			std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" <<std::endl;
-		}
-	}
-	catch(const std::exception& e)
-	{
-		//NORMAL ! :P
-	}
-	
-	for (int i = 0; i < COUNT; ++i)
-	{
-		map_int.insert(ft::make_pair(rand(), rand()));
-	}
-
-	int sum = 0;
-	for (int i = 0; i < 10000; i++)
-	{
-		int access = rand();
-		sum += map_int[access];
-	}
-	std::cout << "should be constant with the same seed: " << sum << std::endl;
+	outputTitle("Vector: Swap");
 
 	{
-		ft::map<int, int> copy = map_int;
+		ft::vector<int> vec1, vec2;
+		for(int i=0; i < 20; i++)
+			vec1.push_back(i);
+		vec2.push_back(100);
+		ft::vector<int>::iterator itb, itm;
+		itb = vec1.begin();
+		itm = vec1.begin() + 2;
+		std::cout << vec1.size() << " | " << vec2.size() << std::endl;
+		std::cout << *itb << " | " << *itm << std::endl;
+		vec1.swap(vec2);
+		std::cout << *itb << " | " << *itm << std::endl;
+		std::cout << vec1.size() << " | " << vec2.size() << std::endl;
 	}
-	MutantStack<char> iterable_stack;
-	for (char letter = 'a'; letter <= 'z'; letter++)
-		iterable_stack.push(letter);
-	for (MutantStack<char>::iterator it = iterable_stack.begin(); it != iterable_stack.end(); it++)
+
+	// **************************************************
 	{
-		std::cout << *it;
+		outputTitle("Map: Balanced Input");
+		ft::map<int, int> map;
+
+		t_timeval start;
+		int elapsedTime;
+
+		
+		map_insert_test(&map, 0, NODES);
+		gettimeofday(&start, NULL);
+		for(int i = 0; i < NODES; i++)
+			std::cout << map.find(i)->second << std::endl;
+		elapsedTime = gettime(start);
+		if (TESTCASE)
+			std::cerr << "STD (unbalanced tree) elapsed time: " << elapsedTime << "ms\n";
+		else
+			std::cerr << "FT (unbalanced tree) elapsed time: " << elapsedTime << "ms\n";
 	}
-	std::cout << std::endl;
+	// **************************************************
+	{
+		outputTitle("Map: Random Input");
+		ft::map<int, int> map_rand;
+
+		t_timeval start;
+		int elapsedTime;
+
+		for(int i = 0; i < NODES; i++)
+			map_rand.insert(ft::make_pair(rand(), rand()));
+		ft::map<int, int>::iterator it, ite;
+		it = map_rand.begin();
+		ite = --map_rand.end();
+		gettimeofday(&start, NULL);
+		for(; it->first < ite->first; it++)
+			std::cout << map_rand.find(it->first)->second << std::endl;
+		elapsedTime = gettime(start);
+		if (TESTCASE)
+			std::cerr << "STD (random tree) elapsed time: " << elapsedTime << "ms\n";
+		else
+			std::cerr << "FT (random tree) elapsed time: " << elapsedTime << "ms\n";
+	}
+	// **************************************************
+	{
+		outputTitle("Stack: Different Base Container");
+		ft::stack<int, ft::vector<int> > stack_ft_vec;
+		ft::stack<int,std::vector<int> > stack_std_vec;
+		ft::stack<int, std::deque<int> > stack_std_deq;
+		ft::stack<int, std::list<int> > stack_std_lst;
+
+		stack_ft_vec.push(1);
+		stack_std_vec.push(2);
+		stack_std_deq.push(3);
+		stack_std_lst.push(4);
+
+		std::cout << stack_ft_vec.empty() << std::endl;
+		std::cout << stack_std_vec.empty() << std::endl;
+		std::cout << stack_std_deq.empty() << std::endl;
+		std::cout << stack_std_lst.empty() << std::endl;
+	}
 	return (0);
-}*/
+}
+

@@ -1,13 +1,13 @@
 #ifndef FT_REVERSE_ITERATOR_HPP
- #define FT_REVERSE_ITERATOR_HPP
+#define FT_REVERSE_ITERATOR_HPP
 
  //#include <iterator>
- #include <cstddef>
+#include <cstddef>
  
- #include "iterator_traits.hpp"
+#include "iterator_traits.hpp"
  
- namespace ft
- {
+namespace ft
+{
 	template <typename Iterator>
 	class reverse_iterator
 	{
@@ -149,5 +149,5 @@
 	{
 		return (rhs.base() - lhs);
 	}
- }
+}
 #endif

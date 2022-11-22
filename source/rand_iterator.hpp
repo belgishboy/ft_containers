@@ -1,13 +1,13 @@
 #ifndef FT_RAND_ITERATOR_HPP
- #define FT_RAND_ITERATOR_HPP
+#define FT_RAND_ITERATOR_HPP
 
  //#include <iterator>
- #include <cstddef>
+#include <cstddef>
 
- #include "iterator_traits.hpp"
+#include "iterator_traits.hpp"
 
- namespace ft
- {
+namespace ft
+{
 	template <typename Iter>
 	class rand_iterator :  std::iterator<std::random_access_iterator_tag, Iter>
 	{
@@ -157,5 +157,5 @@
 		tmp += lhs;
 		return (tmp);
 	}
- }
+}
 #endif

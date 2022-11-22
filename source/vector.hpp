@@ -1,9 +1,9 @@
 #ifndef FT_VECTOR_HPP
-# define FT_VECTOR_HPP
+#define FT_VECTOR_HPP
 
 #include <memory>
 //#include <vector>
-#include<iostream>
+#include <iostream>
 
 #include "reverse_iterator.hpp"
 #include "rand_iterator.hpp"
