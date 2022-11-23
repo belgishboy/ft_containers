@@ -361,21 +361,33 @@ namespace ft
 			return (this->_alloc);
 		};
 
-	};
+		bool operator==(const ft::vector<T, Allocator>& rhs) const {
+			if (this->size() != rhs.size())
+				return false;
+			return ft::equal(this->begin(), this->end(), rhs.begin());
+		}
 
-	//REGIONAL OPERATORS
-	template <class T, class Allocator>
-	ft::vector<T>operator==(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
-	template <class T, class Allocator>
-	ft::vector<T>operator< (const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
-	template <class T, class Allocator>
-	ft::vector<T>operator!=(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
-	template <class T, class Allocator>
-	ft::vector<T>operator> (const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
-	template <class T, class Allocator>
-	ft::vector<T>operator>=(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
-	template <class T, class Allocator>
-	ft::vector<T>operator<=(const ft::vector<T,Allocator>& lhs, const ft::vector<T,Allocator>& rhs);
+		bool operator!=(const ft::vector<T, Allocator>& rhs) const {
+			return !(*this == rhs);
+		}
+
+		bool operator<(const ft::vector<T, Allocator>& rhs) const {
+			return ft::lexicographical_compare(this->begin(), this->end(), rhs.begin(), rhs.end());
+		}
+
+		bool operator>(const ft::vector<T, Allocator>& rhs) const {
+			return rhs < *this;
+		}
+
+		bool operator<=(const ft::vector<T, Allocator>& rhs) const {
+			return !(rhs < *this);
+		}
+
+		bool operator>=(const ft::vector<T, Allocator>& rhs) const {
+			return !(*this < rhs);
+		}
+
+	};
 }
 
 #endif 

@@ -26,8 +26,6 @@
 #endif
 
 #include <stdlib.h>
-// #include "AAnimal.hpp"
-// #include "Cat.hpp"
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
